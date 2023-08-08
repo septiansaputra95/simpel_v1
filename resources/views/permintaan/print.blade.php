@@ -57,6 +57,7 @@
         $keterangan     = $item->permintaan_header_keterangan;
         $namakaryawan   = $item->karyawan;
         $date           = $item->permintaan_header_tgl;
+        $unitbagian     = $item->unit_nama;
     }
     $no = 1;
     $total = 0;
@@ -76,6 +77,9 @@
         <div class="col-md-6">
             <label>Keterangan:</label>
             <label>{{ $keterangan }}</label>
+            <br>
+            <label>Unit Bagian:</label>
+            <label>{{ $unitbagian }}</label>
         </div>
         <div class="col-md-6">
             <label>Tanggal:</label>

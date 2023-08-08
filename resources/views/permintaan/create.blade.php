@@ -66,7 +66,7 @@
                     
                     <br>
                     <button class="btn btn-outline-success">Save</button>
-                    <a href="{{ URL::previous() }}" class="btn btn-outline-warning">Kembali</a>
+                    <a href="/permintaan" class="btn btn-outline-warning">Kembali</a>
                 </form>
               </div>
             </div>

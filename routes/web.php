@@ -30,6 +30,7 @@ Route::get('/masterbarang', function () {
 
 // Permintaan
 Route::get('/permintaan', [PermintaanController::class, 'index']);
+//Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintann');
 Route::get('/permintaan_add', [PermintaanController::class, 'create']);
 //Route::get('/permintaan_show', [PermintaanController::class, 'show'])->name('permintaan_show');
 Route::post('/permintaan_show', [PermintaanController::class, 'show'])->name('permintaan_show');
