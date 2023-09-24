@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\PermintaanController;
+use App\Http\Controllers\FarmasiKonsumsiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,8 @@ Route::get('/permintaan/print/{id}', [PermintaanController::class, 'print'])->na
 //Route::get('/laporan', [PermintaanController::class, 'laporan']);
 Route::match(['get', 'post'], '/laporan', [PermintaanController::class, 'laporan']);
 Route::get('/laporan/detail/{id}/{bulan}/{tahun}', [PermintaanController::class, 'detail'])->name('detail');
+
+// Route::group(['namespace' => 'Farmasi'], function() {
+//     Route::get('/konsumsi', 'FarmasiKonsumsiController@index')->name('farmasi.konsumsi.index');
+// });
+Route::get('/farmasi/konsumsi', [FarmasiKonsumsiController::class, 'index'])->name('farmasi.konsumsi.index');
