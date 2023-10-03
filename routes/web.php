@@ -44,7 +44,5 @@ Route::get('/permintaan/print/{id}', [PermintaanController::class, 'print'])->na
 Route::match(['get', 'post'], '/laporan', [PermintaanController::class, 'laporan']);
 Route::get('/laporan/detail/{id}/{bulan}/{tahun}', [PermintaanController::class, 'detail'])->name('detail');
 
-// Route::group(['namespace' => 'Farmasi'], function() {
-//     Route::get('/konsumsi', 'FarmasiKonsumsiController@index')->name('farmasi.konsumsi.index');
-// });
 Route::get('/farmasi/konsumsi', [FarmasiKonsumsiController::class, 'index'])->name('farmasi.konsumsi.index');
+Route::post('/farmasi/konsumsi/simpan', [PermintaanController::class, 'store'])->name('farmasi.konsumsi.simpan');

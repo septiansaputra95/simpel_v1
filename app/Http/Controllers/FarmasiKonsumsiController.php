@@ -25,18 +25,8 @@ class FarmasiKonsumsiController extends Controller
 
                 $query[] = [
                     'no' => $no++,
-                    'no_reg' => $val->no_registrasi,
-                    'no_rm' => $val->no_rekamedis,
-                    'no_kartu' => $val->no_kartu,
-                    'tanggal_lahir' => tanggalFormat($val->tanggal_lahir),
-                    'nama_pasien' => $val->nama_pasien,
-                    'tanggal_registrasi' => tanggalFormat($val->tanggal_registrasi),
-                    'jaminan' => $val->jaminan,
-                    'poli_tujuan' => $val->nama_poli,
-                    'alamat_pasien' => $val->alamat_pasien,
-                    'no_telp' => $val->no_telp,
-                    'nama_dokter' => $val->nama_dokter,
-                    'no_sep' => $val->no_sep,
+                    'data_id' => $val->data_id,
+                    'nama' => $val->nama,
                     'aksi' => $this->setButton($val->no_registrasi)
                 ];
             }
