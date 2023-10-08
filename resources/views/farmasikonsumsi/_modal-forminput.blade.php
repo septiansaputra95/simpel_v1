@@ -11,23 +11,24 @@
         <div class="modal-body">
           <!-- Form untuk mengunggah data -->
           <form action="{{ route('farmasi.konsumsi.simpan') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-              <label for="namaKaryawan">Nama Karyawan</label>
-              <input type="text" class="form-control" id="namaKaryawan" name="namaKaryawan" placeholder="Masukkan Nama Karyawan">
-            </div>
-            <div class="form-group">
-              <label for="uploadFile">Upload File</label>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile">
-                <label class="custom-file-label" for="uploadFile">Pilih file</label>
+              @csrf
+              <div class="form-group">
+                  <label for="namaPetugas">Nama Karyawan</label>
+                  <input type="text" class="form-control" id="nama-petugas" name="nama_petugas" placeholder="Masukkan Nama Karyawan">
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
+              <div class="form-group">
+                  <label for="uploadFile">Upload File</label>
+                  <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="upload-file" name="upload_file">
+                      <label class="custom-file-label" for="upload-file">Pilih file</label>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
           </form>
+
           <!-- Akhir form -->
         </div>
       </div>

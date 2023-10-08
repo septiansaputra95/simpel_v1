@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\RepoFarmasiKonsumsi;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FarmasiKonsumsiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $repoFarmasiKonsumsi;
+
+    public function __construct()
+    {
+        $this->repoFarmasiKonsumsi   = new RepoFarmasiKonsumsi;
+    }
+
     public function index()
     {
         //
@@ -36,20 +45,66 @@ class FarmasiKonsumsiController extends Controller
         }
     }
 
+    public function uploadExcel(Request $request)
+    {
+        $request->validate([
+            'upload_file' => 'required|mimes:xlsx,xls',
+            'nama_karyawan' => 'required'
+        ]);
+
+        dd($request);
+        $file = $request->file('upload_file');
+
+        // Proses upload menggunakan Laravel Excel
+        Excel::import(new FarmasiKonsumsiImport, $file);
+
+        return redirect()->back()->with('success', 'Data berhasil diunggah.');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function simpan(Request $request)
     {
         //
+        $request->validate([
+            'upload_file'   => 'required|mimes:xlsx,xls',
+            'nama_petugas'  => 'required'
+        ]);
+
+        $dataid = date('Ymd').''.rand(1,10000);
+        //dd($dataid, date('Y-m-d h:m:s'));
+        $file = $request->file('upload_file');
+        if ($file->isValid()) {
+            // File sudah disimpan di variabel $file
+            // Lanjutkan dengan proses berikutnya
+            $simpanFarmasiHeader = $this->repoFarmasiKonsumsi->simpanFarmasiKonsumsiHeader($request, $dataid);
+            //echo "File Excel masuk";
+            $import = new FarmasiKonsumsiImport; // Membuat instance dari FarmasiKonsumsiImport
+            $data = Excel::toCollection($import, $file)->first(); // Mengambil data pertama dari sheet Excel
+
+        
+            // ...
+        } else {
+            // File tidak valid atau tidak berhasil diunggah
+            // Handle kesalahan di sini
+            // Contohnya, tampilkan pesan kesalahan kepada pengguna
+            echo "File Excel Tidak masuk";
+        }
+        die();
+        // Proses upload menggunakan Laravel Excel
+        Excel::import(new FarmasiKonsumsiImport, $file);
+
+        return redirect()->back()->with('success', 'Data berhasil diunggah.');
     }
 
     /**
