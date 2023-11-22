@@ -57,7 +57,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- End Level two -->
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
+            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">BPJS</a>
+            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+              <li><a href="{{ route('bpjs.updatewaktu.index') }}" class="dropdown-item">Update Waktu </a></li>
+            </ul>
+          <li class="nav-item dropdown"> --}}
+
+            <li class="nav-item dropdown">
+              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Poliklinik</a>
+              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                <li><a href="{{ route('poliklinik.antrian.poli') }}" class="dropdown-item">Antrian Poli </a></li>
+              </ul>
+            <li class="nav-item dropdown">
+
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Gudang Umum</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
               <li><a href="permintaan" class="dropdown-item">Permintaan </a></li>

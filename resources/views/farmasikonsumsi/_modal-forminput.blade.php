@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <!-- Form untuk mengunggah data -->
-          <form action="{{ route('farmasi.konsumsi.simpan') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('farmasi.konsumsi.upload.excel') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                   <label for="namaPetugas">Nama Karyawan</label>
@@ -19,8 +19,9 @@
               <div class="form-group">
                   <label for="uploadFile">Upload File</label>
                   <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="upload-file" name="upload_file">
-                      <label class="custom-file-label" for="upload-file">Pilih file</label>
+                      <input type="file" class="" id="upload-file" name="upload_file">
+                      {{-- <input type="file" class="custom-file-input" id="upload-file" name="upload_file">
+                      <label class="custom-file-label" for="upload-file">Pilih file</label> --}}
                   </div>
               </div>
               <div class="modal-footer">

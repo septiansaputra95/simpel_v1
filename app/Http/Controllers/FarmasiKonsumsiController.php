@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\RepoFarmasiKonsumsi;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\FarmasiKonsumsiImport;
 
 class FarmasiKonsumsiController extends Controller
 {
@@ -47,16 +48,25 @@ class FarmasiKonsumsiController extends Controller
 
     public function uploadExcel(Request $request)
     {
+        //echo "sampai upload";die();
         $request->validate([
             'upload_file' => 'required|mimes:xlsx,xls',
-            'nama_karyawan' => 'required'
+            'nama_petugas' => 'required'
         ]);
 
-        dd($request);
-        $file = $request->file('upload_file');
+        // menangkap file excel
+		$file = $request->file('upload_file');
+ 
+		// membuat nama file unik
+		$nama_file = rand().$file->getClientOriginalName();
+
+        // upload ke folder file_siswa di dalam folder public
+	    $file->move('file_upload',$nama_file);
+        //dd($request, $file);
 
         // Proses upload menggunakan Laravel Excel
-        Excel::import(new FarmasiKonsumsiImport, $file);
+        //Excel::import(new FarmasiKonsumsiImport, $file);
+        Excel::import(new FarmasiKonsumsiImport(), public_path('/file_upload/'.$nama_file));
 
         return redirect()->back()->with('success', 'Data berhasil diunggah.');
     }

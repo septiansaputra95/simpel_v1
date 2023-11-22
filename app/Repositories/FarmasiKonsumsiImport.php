@@ -1,5 +1,6 @@
 <?php
 namespace App\Repositories;
+namespace App\Imports;
 
 use App\FarmasiKonsumsi; // Sesuaikan dengan model yang digunakan
 use Maatwebsite\Excel\Concerns\ToModel;

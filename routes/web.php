@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\FarmasiKonsumsiController;
+use App\Http\Controllers\PoliklinikController;
+// use App\Repositories\PoliklinikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +50,12 @@ Route::get('/farmasi/konsumsi', [FarmasiKonsumsiController::class, 'index'])->na
 Route::post('/farmasi/konsumsi/simpan', [FarmasiKonsumsiController::class, 'simpan'])->name('farmasi.konsumsi.simpan');
 Route::post('/farmasi/konsumsi/uploadexcel', [FarmasiKonsumsiController::class, 'uploadExcel'])->name('farmasi.konsumsi.upload.excel');
 
+// Poliklinik
+Route::get('/poliklinik/antrian', [PoliklinikController::class, 'antrian'])->name('poliklinik.antrian.poli');
+
+
+// BPJS
+// Update Waktu
+//    Route::get('/bpjs/updatewaktu', [FarmasiKonsumsiController::class 'index'])->name('bpjs.updatewaktu.index');
+
+    Route::get('/bpjs/updatewaktu', [UpdateWaktuController::class, 'index'])->name('bpjs.updatewaktu.index');
