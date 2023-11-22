@@ -22,9 +22,10 @@ class FarmasiKonsumsiController extends Controller
     public function index()
     {
         //
-        return view('farmasikonsumsi.index');
+        return view('underconstruction');
     }
 
+        
     public function indexAjax(Request $request)
     {
         if ($request->ajax()) {
