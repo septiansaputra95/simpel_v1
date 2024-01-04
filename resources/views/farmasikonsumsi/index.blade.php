@@ -1,5 +1,9 @@
 @extends('layout.main_layout')
-
+@php
+    $tanggalSaatIni = new DateTime();
+    $tanggal_dari    = (clone $tanggalSaatIni)->sub(new DateInterval('P8D'));
+    $tanggal_sampai = (clone $tanggalSaatIni)->sub(new DateInterval('P1D'));
+@endphp
 @section('container')
      <!-- Content Header (Page header) -->
      <div class="content-header">
@@ -22,7 +26,7 @@
 
     <!-- Main content -->
     <div class="content">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
             <div class="card card-primary card-outline">
@@ -30,16 +34,32 @@
                     <h3 class="card-title">Farmasi</h3>
                 </div>
               <div class="card-body">
-                <button class="btn btn-outline-primary" id="tambah_data">+ Tambah Data</button>
+                {{-- <button class="btn btn-outline-primary" id="tambah_data">+ Tambah Data</button> --}}
+                <label for="">Di Tunggu Jam 08.15, Data Akan diupdate oleh Petugas Snake Man</label>
+                <br>
+                {{-- <label for="">Tanggal:</label> 
+                <input type="date" id="tanggal-dari" name="tanggal_registrasi"
+                value="{{ $tanggal_dari->format('Y-m-d') }}" class="input-sm col-xs-2 col-sm-2" />
+
+                <label for=""> s/d: </label>
+                <input type="date" id="tanggal-sampai" name="tanggal_registrasi"
+                value="{{ $tanggal_sampai->format('Y-m-d') }}" class="input-sm col-xs-2 col-sm-2" />
+
+                &nbsp;&nbsp;<button class="btn btn-sm btn-info">Reload</button> --}}
                 <br><br>
-                <table class="table table-bordered table-hover" id="datatable">
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+                <table class="table table-bordered table-hover" id="tabel-rawat-jalan">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Document Id</th>
+                            <th>Nama Petugas</th>
                             <th>Tanggal Input</th>
-                            <th>Gudang</th>
-                            <th>Petugas Input</th>
-                            <th colspan=3>Action</th>
+                            <th>Konsumsi Tanggal</th>
+                            <th>Aksi Resep</th>
+                            <th>Aksi Sub Resep</th>
+                            <th>Aksi Biaya Obat Ekse</th>
+                            <th>Aksi Biaya Obat JKN</th>
                         </tr>
                     </thead>
                 </table>
@@ -60,5 +80,4 @@
 
 <!-- JavaScript untuk menampilkan modal -->
 @include('farmasikonsumsi.scripts')
-@include('farmasikonsumsi._modal-forminput')
 @endsection

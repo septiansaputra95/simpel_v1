@@ -115,5 +115,27 @@
     }, 1000); // Penundaan 1 detik (1000 milidetik)
 
   });
+
+//   document.getElementById('cetakBtn').addEventListener('click', function () {
+//      // Dapatkan waktu saat ini
+//      var currentTime = new Date();
+    
+//     // Format tanggal dengan "YYYY-MM-DD hh:mm:ss"
+//     var formattedDate = currentTime.toISOString().slice(0, 19).replace("T", " ");
+
+//     // Dapatkan nilai dari form
+//     var selectedDokter = document.getElementById('dokter').value;
+//     var selectedPoliklinik = document.getElementById('poliklinik').value;
+//     var nomorAntrian = document.getElementById('nomorAntrian').value;
+
+//     // Buat URL untuk tampilan cetak
+//     var printUrl = '/poliklinik/cetak?dokter=' + encodeURIComponent(selectedDokter) +
+//                    '&poliklinik=' + encodeURIComponent(selectedPoliklinik) +
+//                    '&nomorAntrian=' + encodeURIComponent(nomorAntrian) +
+//                    '&formattedDate=' + encodeURIComponent(formattedDate);
+
+//     // Buka tab baru dan arahkan ke URL cetak
+//     var printTab = window.open(printUrl, '_blank');
+// });
 </script>
 @endsection

@@ -78,6 +78,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'pgsql_hinai' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_HINAI', '127.0.0.1'),
+            'port' => env('DB_PORT_HINAI', '5432'),
+            'database' => env('DB_DATABASE_HINAI', 'forge'),
+            'username' => env('DB_USERNAME_HINAI', 'forge'),
+            'password' => env('DB_PASSWORD_HINAI', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),

@@ -35,9 +35,16 @@ class PoliklinikController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function cetak(Request $request)
     {
         //
+        $data = [
+            'dokter' => $request->input('dokter'),
+            'poliklinik' => $request->input('poliklinik'),
+            'nomorAntrian' => $request->input('nomorAntrian'),
+            'formattedDate' => $request->input('formattedDate'),
+        ];
+        return view('poliklinik.cetak', ['data' => $data]);
     }
 
     /**

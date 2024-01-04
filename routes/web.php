@@ -5,6 +5,7 @@ use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\FarmasiKonsumsiController;
 use App\Http\Controllers\PoliklinikController;
+use App\Http\Controllers\AntrolController;
 // use App\Repositories\PoliklinikController;
 
 /*
@@ -47,15 +48,19 @@ Route::match(['get', 'post'], '/laporan', [PermintaanController::class, 'laporan
 Route::get('/laporan/detail/{id}/{bulan}/{tahun}', [PermintaanController::class, 'detail'])->name('detail');
 
 Route::get('/farmasi/konsumsi', [FarmasiKonsumsiController::class, 'index'])->name('farmasi.konsumsi.index');
-Route::post('/farmasi/konsumsi/simpan', [FarmasiKonsumsiController::class, 'simpan'])->name('farmasi.konsumsi.simpan');
-Route::post('/farmasi/konsumsi/uploadexcel', [FarmasiKonsumsiController::class, 'uploadExcel'])->name('farmasi.konsumsi.upload.excel');
+// Route::post('/farmasi/konsumsi/simpan', [FarmasiKonsumsiController::class, 'simpan'])->name('farmasi.konsumsi.simpan');
+// Route::post('/farmasi/konsumsi/uploadexcel', [FarmasiKonsumsiController::class, 'uploadExcel'])->name('farmasi.konsumsi.upload.excel');
+Route::get('/farmasi/datatables', [FarmasiKonsumsiController::class, 'indexAjax'])->name('farmasi.datatables');
+Route::post('/farmasi/generateResep', [FarmasiKonsumsiController::class, 'generateResep'])->name('farmasi.generateResep');
+Route::post('/farmasi/generateSubResep', [FarmasiKonsumsiController::class, 'generateSubResep'])->name('farmasi.generateSubResep');
+Route::post('/farmasi/generateBiayaEkse', [FarmasiKonsumsiController::class, 'generateBiayaEkse'])->name('farmasi.generateBiayaEkse');
+
 
 // Poliklinik
 Route::get('/poliklinik/antrian', [PoliklinikController::class, 'antrian'])->name('poliklinik.antrian.poli');
-
+Route::get('/poliklinik/cetak', [PoliklinikController::class, 'cetak'])->name('poliklinik.antrian.cetak');
 
 // BPJS
 // Update Waktu
-//    Route::get('/bpjs/updatewaktu', [FarmasiKonsumsiController::class 'index'])->name('bpjs.updatewaktu.index');
-
-    Route::get('/bpjs/updatewaktu', [UpdateWaktuController::class, 'index'])->name('bpjs.updatewaktu.index');
+Route::get('/antrol/index', [AntrolController::class, 'index'])->name('antrol.index');
+Route::get('/antrol/datatables', [AntrolController::class, 'indexAjax'])->name('antrol.datatables');
