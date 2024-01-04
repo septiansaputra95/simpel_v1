@@ -72,6 +72,12 @@ class FarmasiKonsumsiController extends Controller
 
     }
 
+    public function generateBiayaJKN(Request $request)
+    {
+        return $dataResep = $this->repoFarmasiKonsumsi->getBiayaObatJKN($request);
+
+    }
+
     // Deklarasi untuk button di data tabel
     private function setButtonResep($data_id)
     {

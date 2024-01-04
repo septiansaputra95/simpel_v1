@@ -6,6 +6,7 @@
         let urlGenerateResep = "/farmasi/generateResep";
         let urlGenerateSubResep = "/farmasi/generateSubResep";
         let urlGenerateBiayaEkse = "/farmasi/generateBiayaEkse";
+        let urlGenerateBiayaJKN = "/farmasi/generateBiayaJKN";
 
 
     
@@ -108,8 +109,29 @@
                 },
                 //data: {data_id: data_id},
                 success: function (response) {
-                    // alert("BIAYA EKSEKUTIF = " + formatRupiah(response));
-                    alert(response);
+                    alert("BIAYA OBAT EKSEKUTIF = " + formatRupiah(response));
+                    // alert(response);
+                },
+                error: function () {
+                    alert('Terjadi kesalahan saat mencoba generate data.');
+                }
+            });
+        }
+
+        function generateDataObatJKN(data_id) {
+            console.log('Data ID yang dikirim Obat JKN:', data_id);
+            $.ajax({
+                type: 'POST',
+                url: urlGenerateBiayaJKN,
+                data: {
+                    data_id: data_id,
+                    action: 'Biaya',
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                //data: {data_id: data_id},
+                success: function (response) {
+                    alert("BIAYA OBAT JKN = " + formatRupiah(response));
+                    // alert(response);
                 },
                 error: function () {
                     alert('Terjadi kesalahan saat mencoba generate data.');
@@ -143,6 +165,13 @@
                 console.log(dataId)
                 // Memanggil fungsi khusus untuk generate dengan AJAX
                 generateDataObatEkse(dataId);
+            });
+
+            $('#tabel-rawat-jalan tbody').on('click', '#generateObatJKN', function () {
+                var dataId = $(this).data('id');
+                console.log(dataId)
+                // Memanggil fungsi khusus untuk generate dengan AJAX
+                generateDataObatJKN(dataId);
             });
 
         })();

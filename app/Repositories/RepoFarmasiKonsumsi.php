@@ -82,17 +82,38 @@ class RepoFarmasiKonsumsi
         $gudangbesar = 'FARMASI REGULER';
         
         $totalCost = DB::table('pharmacy_consumption as pc')
-            //->select(DB::raw('cost_value'))
+            ->select(DB::raw('SUM(COALESCE(cost_value, 0)) as total_cost'))
             ->where('data_id', $request->data_id)
-            ->whereNotIn('storename', [$gudangkecil, $gudangbesar])
-            //->first(); // Menggunakan first() karena kita hanya mengharapkan satu hasil
-            ->get();
-        $hasil = $totalCost->count();
+            ->where('storename', '!=', $gudangbesar)
+            ->where('storename', 'NOT LIKE', '%' . $gudangkecil . '%')
+            ->first();
+
+        $hasil = $totalCost->total_cost;
         
         $formatResult = "{$hasil}";
         //$formatResult = $hasil;
         return $formatResult;  
     }
+
+    public function getBiayaObatJKN($request)
+    {
+        $gudangkecil = 'BPJS';
+        $gudangbesar = 'FARMASI REGULER';
+        
+        $totalCost = DB::table('pharmacy_consumption as pc')
+            ->select(DB::raw('SUM(COALESCE(cost_value, 0)) as total_cost'))
+            ->where('data_id', $request->data_id)
+            ->where('storename', '=', $gudangbesar)
+            ->where('storename', 'LIKE', '%' . $gudangkecil . '%')
+            ->first();
+
+        $hasil = $totalCost->total_cost;
+        
+        $formatResult = "{$hasil}";
+        //$formatResult = $hasil;
+        return $formatResult;  
+    }
+
 
     public function model(array $row)
     {

@@ -54,6 +54,7 @@ Route::get('/farmasi/datatables', [FarmasiKonsumsiController::class, 'indexAjax'
 Route::post('/farmasi/generateResep', [FarmasiKonsumsiController::class, 'generateResep'])->name('farmasi.generateResep');
 Route::post('/farmasi/generateSubResep', [FarmasiKonsumsiController::class, 'generateSubResep'])->name('farmasi.generateSubResep');
 Route::post('/farmasi/generateBiayaEkse', [FarmasiKonsumsiController::class, 'generateBiayaEkse'])->name('farmasi.generateBiayaEkse');
+Route::post('/farmasi/generateBiayaJKN', [FarmasiKonsumsiController::class, 'generateBiayaJKN'])->name('farmasi.generateBiayaJKN');
 
 
 // Poliklinik
