@@ -108,25 +108,25 @@
                     <td>{{ $item->barang_nama }}</td>
                     <td>{{ $item->permintaan_detail_jumlah }}</td>
                     <td>{{ $item->barang_satuan }}</td>
-                    <td>Rp.{{ $item->permintaan_detail_harga }}</td>
-                    <td>Rp.{{ $item->permintaan_detail_harga * $item->permintaan_detail_jumlah }}</td>
+                    <td>Rp.{{ number_format($item->permintaan_detail_harga, 2, ',', '.') }}</td>
+                    <td>Rp.{{ number_format($item->permintaan_detail_harga * $item->permintaan_detail_jumlah, 2, ',', '.') }}</td>
                 </tr>
                 @php 
                 $total = $total + ($item->permintaan_detail_harga * $item->permintaan_detail_jumlah);
                 @endphp
             @endforeach
-            <tr>
-                <td colspan="5" align="center">TOTAL HARGA</td>
-                <td>Rp.{{ $total }}</td>
-            </tr>
-            <tr>
-                <td colspan="5" align="center">PPN 11%</td>
-                <td>Rp.{{ $total * 11/100 }}</td>
-            </tr>
-            <tr>
-                <td colspan="5" align="center">GRAND TOTAL</td>
-                <td><b>Rp.{{ $grandtotal = $total + ($total * 11/100) }}</b></td>
-            </tr>
+                <tr>
+                    <td colspan="5" align="center">TOTAL HARGA</td>
+                    <td>Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="center">PPN 11%</td>
+                    <td>Rp.{{ number_format($total * 11/100, 2, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="center">GRAND TOTAL</td>
+                    <td><b>Rp.{{ number_format($grandtotal = $total + ($total * 11/100), 2, ',', '.') }}</b></td>
+                </tr>
         </tbody>
     </table>
     <div class="signature">

@@ -170,6 +170,7 @@ class PermintaanController extends Controller
         $data = DB::table('permintaan_header')
                 ->leftjoin('permintaan_detail', 'permintaan_detail.permintaan_header_id', '=', 'permintaan_header.permintaan_header_id')
                 ->leftjoin('masterbarang', 'masterbarang.barang_id', '=', 'permintaan_detail.barang_id')
+                ->leftjoin('masterunit', 'masterunit.unit_id', '=', 'permintaan_header.unit_id')
                 ->where('permintaan_header.permintaan_header_id', '=', $id)
                 ->get();
         return view('permintaan.print', ['data' => $data]);
