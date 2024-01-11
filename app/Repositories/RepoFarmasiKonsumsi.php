@@ -102,10 +102,16 @@ class RepoFarmasiKonsumsi
         
         $totalCost = DB::table('pharmacy_consumption as pc')
             ->select(DB::raw('SUM(COALESCE(cost_value, 0)) as total_cost'))
+            // ->select('cost_value as total_cost')
             ->where('data_id', $request->data_id)
-            ->where('storename', '=', $gudangbesar)
-            ->where('storename', 'LIKE', '%' . $gudangkecil . '%')
+            ->where(function ($query) use ($gudangbesar, $gudangkecil) {
+                $query->where('storename', '=', $gudangbesar)
+                    ->orWhere('storename', 'LIKE', '%' . $gudangkecil . '%');
+            })
+            // ->where('storename', '=', $gudangbesar)
+            // ->orWhere('storename', 'LIKE', '%' . $gudangkecil . '%')
             ->first();
+            // ->get();
 
         $hasil = $totalCost->total_cost;
         
