@@ -2,7 +2,8 @@
     
     $(function () {
         console.log('S')
-        let urlLoadData = "/farmasi/datatables";
+        let urlLoadData = "{{ asset('/farmasi/datatables') }}";
+        //let urlLoadData = "/farmasi/datatables";
         let urlGenerateResep = "/farmasi/generateResep";
         let urlGenerateSubResep = "/farmasi/generateSubResep";
         let urlGenerateBiayaEkse = "/farmasi/generateBiayaEkse";
