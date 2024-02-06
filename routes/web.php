@@ -33,10 +33,8 @@ Route::get('/masterbarang', function () {
 // Route::post('/masterbarang_update', [MasterBarangController::class, 'update'])->name('masterbarang_update');
 
 // Permintaan
-Route::get('/permintaan', [PermintaanController::class, 'index']);
-//Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintann');
-Route::get('/permintaan_add', [PermintaanController::class, 'create']);
-//Route::get('/permintaan_show', [PermintaanController::class, 'show'])->name('permintaan_show');
+Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintann.index');
+Route::get('/permintaan_add', [PermintaanController::class, 'create'])->name('permintann.add');;
 Route::post('/permintaan_show', [PermintaanController::class, 'show'])->name('permintaan_show');
 //Route::get('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
 Route::post('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
@@ -44,7 +42,7 @@ Route::get('/permintaan/print/{id}', [PermintaanController::class, 'print'])->na
 
 //Laporan Permintaan
 //Route::get('/laporan', [PermintaanController::class, 'laporan']);
-Route::match(['get', 'post'], '/laporan', [PermintaanController::class, 'laporan']);
+Route::match(['get', 'post'], '/laporan', [PermintaanController::class, 'laporan'])->name('permintann.laporan');
 Route::get('/laporan/detail/{id}/{bulan}/{tahun}', [PermintaanController::class, 'detail'])->name('detail');
 
 Route::get('/farmasi/konsumsi', [FarmasiKonsumsiController::class, 'index'])->name('farmasi.konsumsi.index');

@@ -80,9 +80,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Gudang Umum</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-              <li><a href="permintaan" class="dropdown-item">Permintaan </a></li>
-              <li><a href="masterbarang" class="dropdown-item">Master Barang</a></li>
-              <li><a href="laporan" class="dropdown-item">Laporan Permintaan</a></li>
+              <li><a href="{{ route('permintann.index') }}" class="dropdown-item">Permintaan </a></li>
+              <li><a href="{{ route('permintann.index') }}" class="dropdown-item">Master Barang</a></li>
+              <li><a href="{{ route('permintann.laporan') }}" class="dropdown-item">Laporan Permintaan</a></li>
 
               <li class="dropdown-divider"></li>
 
