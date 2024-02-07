@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Repositories\RepoPermintaan;
 
 class PermintaanController extends Controller
 {
+    protected $repoPermintaan;
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        // $this->middleware('auth:dbpass');
+        // IKI inisialisasi CLASS histori Pasien di folder repositories
+        $this->repoPermintaan   = new RepoPermintaan;
+    }
     public function index()
     {
         // Ambil data dari database
@@ -197,60 +205,29 @@ class PermintaanController extends Controller
         //
     }
 
-    public function laporan(Request $request, $bulan = null, $tahun = null)
+    public function laporan(Request $request)
     {
         //
-        $bulan = $request->input('bulan');
-        $tahun = $request->input('tahun');
-        // Jika bulan dan tahun tidak ada yang dikirimkan dari menu atau form
-        if ($bulan === null && $tahun === null) {
-            // Set nilai default bulan dan tahun menjadi bulan dan tahun sekarang
-            $bulanSekarang = Carbon::now()->format('m'); // Mendapatkan nilai bulan sekarang (format: 01, 02, ..., 12)
-            $tahunSekarang = Carbon::now()->format('Y'); // Mendapatkan nilai tahun sekarang (format: 2023, 2024, dsb.)
-            //dd($bulanSekarang);
-        } else {
-            // Jika bulan dan tahun dikirimkan dari form, gunakan nilai dari form
-            $bulanSekarang = $request->input('bulan');
-            $tahunSekarang = $request->input('tahun');
-            //dd($bulanSekarang, $tahunSekarang);
+        $action = $request->input('action');
+
+        if ($action == 'generate') {
+            $generateData = $this->repoPermintaan->generate($request, $bulan = null, $tahun = null);
+
+            //dd($dataunitid, $dataunitnama, $dataharga);
+            return view('permintaan.laporan', [
+                'data'          => $generateData['data'],
+                'dataunitid'    => $generateData['dataunitid'],
+                'dataunitnama'  => $generateData['dataunitnama'],
+                'dataharga'     => $generateData['dataharga'],
+                'bulan'         => $generateData['bulansekarang'],
+                'tahun'         => $generateData['tahunSekarang']
+            ]);
+        } elseif ($action == 'export') {
+            // Logika untuk tombol Export Spreadsheet
         }
+
         
-        $data = DB::table('masterunit')
-                ->orderby('unit_id')
-                ->get();
-
-        //dd(count($data));
-        $dataunitid     = [];
-        $dataunitnama   = [];
-        $dataharga      = [];
-        $index          = 1;
-
-        foreach ($data as $item){
-            $harga = 0 ;
-            $dataunitid[$index]     = $item->unit_id;
-            $dataunitnama[$index]   = $item->unit_nama;
-
-            $datapermintaan = DB::table('permintaan_detail')
-                    ->join('permintaan_header', 'permintaan_header.permintaan_header_id', '=', 'permintaan_detail.permintaan_header_id')
-                    ->where('permintaan_header.unit_id', '=', $item->unit_id)
-                    ->whereMonth('permintaan_header.permintaan_header_tgl', $bulanSekarang)
-                    ->whereYear('permintaan_header.permintaan_header_tgl', $tahunSekarang)
-                    ->get();
-            foreach($datapermintaan as $itempermintaan){
-                $harga = $harga + $itempermintaan->permintaan_detail_harga;
-            }
-            $dataharga[$index] = $harga;
-            $index++;
-        }
-        //dd($dataunitid, $dataunitnama, $dataharga);
-        return view('permintaan.laporan', [
-            'data'          => $data,
-            'dataunitid'    => $dataunitid,
-            'dataunitnama'  => $dataunitnama,
-            'dataharga'     => $dataharga,
-            'bulan'         => $bulanSekarang,
-            'tahun'         => $tahunSekarang
-        ]);
+        
     }
 
     public function detail($id, $bulan, $tahun)
