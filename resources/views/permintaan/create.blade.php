@@ -1,5 +1,6 @@
-@include('layout.menu')
+@extends('layout.main_layout')
 <!-- Content Wrapper. Contains page content -->
+@section('container')
 <div class="content-wrapper">
      <!-- Content Header (Page header) -->
      <div class="content-header">
@@ -79,4 +80,4 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-@include('layout.footer')
+@endsection

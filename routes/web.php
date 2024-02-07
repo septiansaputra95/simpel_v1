@@ -34,7 +34,7 @@ Route::get('/masterbarang', function () {
 
 // Permintaan
 Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintann.index');
-Route::get('/permintaan_add', [PermintaanController::class, 'create'])->name('permintann.add');;
+Route::get('/permintaan_add', [PermintaanController::class, 'create'])->name('permintaan.add');;
 Route::post('/permintaan_show', [PermintaanController::class, 'show'])->name('permintaan_show');
 //Route::get('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
 Route::post('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
