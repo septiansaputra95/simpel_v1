@@ -205,13 +205,16 @@ class PermintaanController extends Controller
         //
     }
 
-    public function laporan(Request $request)
+    public function laporan(Request $request, $bulan = null, $tahun = null)
     {
         //
-        $action = $request->input('action');
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
 
+        $action = $request->input('action');
+        //dd($tahun, $bulan, $action);
         if ($action == 'generate') {
-            $generateData = $this->repoPermintaan->generate($request, $bulan = null, $tahun = null);
+            $generateData = $this->repoPermintaan->generate($bulan, $tahun);
 
             //dd($dataunitid, $dataunitnama, $dataharga);
             return view('permintaan.laporan', [
@@ -224,6 +227,27 @@ class PermintaanController extends Controller
             ]);
         } elseif ($action == 'export') {
             // Logika untuk tombol Export Spreadsheet
+        } else {
+            $bulan = Carbon::now()->format('m'); // Mendapatkan nilai bulan sekarang (format: 01, 02, ..., 12)
+            $tahun = Carbon::now()->format('Y'); // Mendapatkan nilai tahun sekarang (format: 2023, 2024, dsb.)
+            $generateData = $this->repoPermintaan->generate($bulan, $tahun);
+            
+            $dataunitid = $generateData[0];
+            $dataunitnama = $generateData[1];
+            $dataharga = $generateData[2];
+            $data = $generateData[3];
+
+            dd($dataunitid, $dataunitnama, $dataharga, $data);
+            return view('permintaan.laporan', [
+
+                'data'          => $data,
+                'dataunitid'    => $dataunitid,
+                'dataunitnama'  => $dataunitnama,
+                'dataharga'     => $dataharga,
+                'bulan'         => $bulan,
+                'tahun'         => $tahun
+            ]);
+
         }
 
         

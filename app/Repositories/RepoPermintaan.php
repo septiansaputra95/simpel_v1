@@ -6,22 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 class RepoPermintaan
 {
-    public function generate()
+    public function generate($bulan, $tahun)
     {
-        $bulan = $request->input('bulan');
-        $tahun = $request->input('tahun');
-        // Jika bulan dan tahun tidak ada yang dikirimkan dari menu atau form
-        if ($bulan === null && $tahun === null) {
-            // Set nilai default bulan dan tahun menjadi bulan dan tahun sekarang
-            $bulanSekarang = Carbon::now()->format('m'); // Mendapatkan nilai bulan sekarang (format: 01, 02, ..., 12)
-            $tahunSekarang = Carbon::now()->format('Y'); // Mendapatkan nilai tahun sekarang (format: 2023, 2024, dsb.)
-            //dd($bulanSekarang);
-        } else {
-            // Jika bulan dan tahun dikirimkan dari form, gunakan nilai dari form
-            $bulanSekarang = $request->input('bulan');
-            $tahunSekarang = $request->input('tahun');
-            //dd($bulanSekarang, $tahunSekarang);
-        }
         
         $data = DB::table('masterunit')
                 ->orderby('unit_id')
@@ -41,8 +27,8 @@ class RepoPermintaan
             $datapermintaan = DB::table('permintaan_detail')
                     ->join('permintaan_header', 'permintaan_header.permintaan_header_id', '=', 'permintaan_detail.permintaan_header_id')
                     ->where('permintaan_header.unit_id', '=', $item->unit_id)
-                    ->whereMonth('permintaan_header.permintaan_header_tgl', $bulanSekarang)
-                    ->whereYear('permintaan_header.permintaan_header_tgl', $tahunSekarang)
+                    ->whereMonth('permintaan_header.permintaan_header_tgl', $bulan)
+                    ->whereYear('permintaan_header.permintaan_header_tgl', $tahun)
                     ->get();
             foreach($datapermintaan as $itempermintaan){
                 $harga = $harga + $itempermintaan->permintaan_detail_harga;
@@ -50,5 +36,11 @@ class RepoPermintaan
             $dataharga[$index] = $harga;
             $index++;
         }
+        // dd($dataunitid, $dataunitnama, $dataharga);
+        // return $dataunitid;
+        // return $dataunitnama;
+        // return $dataharga;
+
+        return [$dataunitid, $dataunitnama, $dataharga, $data];
     }
 }
