@@ -59,7 +59,8 @@
                     </div>
                   </div>
                   <br>
-                  <button class="btn btn-outline-primary">Generate</button>
+                  <button type="submit" name="action" value="generate" class="btn btn-outline-primary">Generate</button>
+                  <button type="submit" name="action" value="export" class="btn btn-outline-success">Export Spreadsheet</button>
                 </form>
                 <br>
                 <hr>

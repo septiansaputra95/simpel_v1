@@ -30,7 +30,7 @@
                     <h3 class="card-title">Permintaan</h3>
                 </div>
               <div class="card-body">
-                <a href="{{ route('permintaan.add') }}" class="btn btn-outline-primary">+ Tambah Data</a>
+                <a href="permintaan_add" class="btn btn-outline-primary">+ Tambah Data</a>
                 <br><br>
                 <table class="table table-bordered table-hover" id="datatable">
                     <thead>
