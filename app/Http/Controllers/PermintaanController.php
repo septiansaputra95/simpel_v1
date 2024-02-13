@@ -216,14 +216,20 @@ class PermintaanController extends Controller
         if ($action == 'generate') {
             $generateData = $this->repoPermintaan->generate($bulan, $tahun);
 
-            //dd($dataunitid, $dataunitnama, $dataharga);
+            $dataunitid = $generateData[0];
+            $dataunitnama = $generateData[1];
+            $dataharga = $generateData[2];
+            $data = $generateData[3];
+
+            //dd($dataunitid, $dataunitnama, $dataharga, $data);
+            //dd($bulan, $tahun);
             return view('permintaan.laporan', [
-                'data'          => $generateData['data'],
-                'dataunitid'    => $generateData['dataunitid'],
-                'dataunitnama'  => $generateData['dataunitnama'],
-                'dataharga'     => $generateData['dataharga'],
-                'bulan'         => $generateData['bulansekarang'],
-                'tahun'         => $generateData['tahunSekarang']
+                'data'          => $data,
+                'dataunitid'    => $dataunitid,
+                'dataunitnama'  => $dataunitnama,
+                'dataharga'     => $dataharga,
+                'bulan'         => $bulan,
+                'tahun'         => $tahun
             ]);
         } elseif ($action == 'export') {
             // Logika untuk tombol Export Spreadsheet
@@ -237,7 +243,7 @@ class PermintaanController extends Controller
             $dataharga = $generateData[2];
             $data = $generateData[3];
 
-            dd($dataunitid, $dataunitnama, $dataharga, $data);
+            //dd($dataunitid, $dataunitnama, $dataharga, $data);
             return view('permintaan.laporan', [
 
                 'data'          => $data,
