@@ -8,6 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Repositories\RepoPermintaan;
+use App\Exports\PermintaanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PermintaanController extends Controller
 {
@@ -233,6 +235,8 @@ class PermintaanController extends Controller
             ]);
         } elseif ($action == 'export') {
             // Logika untuk tombol Export Spreadsheet
+            // dd($tahun, $bulan);
+            echo "masuk export";
         } else {
             $bulan = Carbon::now()->format('m'); // Mendapatkan nilai bulan sekarang (format: 01, 02, ..., 12)
             $tahun = Carbon::now()->format('Y'); // Mendapatkan nilai tahun sekarang (format: 2023, 2024, dsb.)
@@ -254,10 +258,7 @@ class PermintaanController extends Controller
                 'tahun'         => $tahun
             ]);
 
-        }
-
-        
-        
+        }    
     }
 
     public function detail($id, $bulan, $tahun)

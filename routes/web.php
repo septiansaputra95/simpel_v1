@@ -6,6 +6,7 @@ use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\FarmasiKonsumsiController;
 use App\Http\Controllers\PoliklinikController;
 use App\Http\Controllers\AntrolController;
+use App\Http\Controllers\SuhuRuanganController; 
 // use App\Repositories\PoliklinikController;
 
 /*
@@ -62,5 +63,9 @@ Route::get('/poliklinik/cetak', [PoliklinikController::class, 'cetak'])->name('p
 
 // BPJS
 // Update Waktu
-Route::get('/antrol/index', [AntrolController::class, 'index'])->name('antrol.index');
+#Route::get('/antrol/index', [AntrolController::class, 'index'])->name('antrol.index');
+Route::get('/antrol', [AntrolController::class, 'index'])->name('antrol.index');
 Route::get('/antrol/datatables', [AntrolController::class, 'indexAjax'])->name('antrol.datatables');
+
+// Suhu Ruangan
+Route::get('/suhuruangan', [SuhuRuanganController::class, 'index'])->name('suhuruangan.index');
