@@ -69,3 +69,4 @@ Route::get('/antrol/datatables', [AntrolController::class, 'indexAjax'])->name('
 
 // Suhu Ruangan
 Route::get('/suhuruangan', [SuhuRuanganController::class, 'index'])->name('suhuruangan.index');
+Route::get('/suhuruangan/chart', [SuhuRuanganController::class, 'chart'])->name('suhuruangan.chart');
