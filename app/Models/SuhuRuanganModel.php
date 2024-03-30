@@ -17,10 +17,11 @@ class SuhuRuanganModel extends Model
     
     public function getDataByUnitBulanTahun($unitId, $bulan, $tahun)
     {
-        return $this->where('unit_id', $unitId)
-                    ->whereMonth('tanggal', $bulan)
-                    ->whereYear('tanggal', $tahun)
-                    ->orderBy('idsuhuruangan', 'ASC')
+        return $this->join('masterunit', 'suhuruangan.unit_id', '=', 'masterunit.unit_id')
+                    ->where('suhuruangan.unit_id', $unitId)
+                    ->whereMonth('suhuruangan.tanggal', $bulan)
+                    ->whereYear('suhuruangan.tanggal', $tahun)
+                    ->orderBy('suhuruangan.idsuhuruangan', 'ASC')
                     ->get();
     }
 }

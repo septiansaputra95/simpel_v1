@@ -69,8 +69,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <button class="btn btn-outline-danger btn-sm ">Process</button>
-                                    <button class="btn btn-outline-success btn-sm ">Export Excel</button>
+                                    <button class="btn btn-outline-danger btn-sm " id="process-suhu">Process</button>
+                                    {{-- <button class="btn btn-outline-success btn-sm ">Export Excel</button> --}}
+                                    <a href="{{ route('suhuruangan.live') }}" class="btn btn-outline-primary btn-sm">Live Monitoring</a>
                                 </div>
                             </div>
                             
@@ -131,10 +132,11 @@
         console.log(unitValue);
         console.log(bulanValue);
         console.log(tahunValue);
+        
 
         // Lakukan AJAX request untuk mengambil data dari server
     $.ajax({
-        url: '/suhuruangan/chart',
+        url: "{{ route('suhuruangan.chart') }}",
         method: 'GET',
         data: {
             unit: unitValue,
@@ -146,7 +148,7 @@
             var dataChart = {
                 labels: response.labels,
                 datasets: [{
-                    label: 'Suhu Ruangan',
+                    label: 'Suhu Ruangan ' + response.ruangan,
                     data: response.data,
                     backgroundColor: 'rgba(0, 162, 39, 0.33)',
                     borderColor: 'rgba(0, 162, 39, 0.8)',

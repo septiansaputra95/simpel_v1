@@ -41,16 +41,19 @@ class SuhuRuanganController extends Controller
         // Inisialisasi array untuk menyimpan labels dan data
         $labels = [];
         $dataValue = [];
+        $ruangan = '';
 
         foreach($data as $item)
         {
             $labels[] = $item->tanggal.' '.$item->jam;
             $dataValue[] = $item->suhuruangan;
+            $ruangan = $item->unit_nama;
         }
-
+        //dd($ruangan);
         $chartData = [
             'labels'    => $labels,
-            'data'      => $dataValue
+            'data'      => $dataValue,
+            'ruangan'   => $ruangan
         ];
         //dd($chartData);
 
@@ -61,9 +64,9 @@ class SuhuRuanganController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function live()
     {
-        //
+        return view('suhuruangan.livemonitoring');
     }
 
     /**

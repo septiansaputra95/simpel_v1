@@ -1,7 +1,7 @@
 <script>
 $(function () {
     console.log('S')
-    let urlLoadData = "/antrol/datatables";
+    let urlLoadData = "{{  route('antrol.datatables') }}";
 
     const dataRawatJalan = () => {
         let tanggal = document.getElementById("tanggal-registrasi").value;
@@ -45,6 +45,7 @@ $(function () {
                 { mData: "task_5" },
                 { mData: "task_6" },
                 { mData: "task_7" },
+                { mData: "no_sep" },
                 { className: "text-center", mData: "aksi" },
             ],
         });

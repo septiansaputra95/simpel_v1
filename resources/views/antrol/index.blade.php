@@ -57,6 +57,7 @@
                                             <th>Task 6</th>
                                             <th>Task 7</th>
                                             <th>No SEP</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>

@@ -48,7 +48,8 @@ class AntrolController extends Controller
                     'task_5' => $val->waktu_task5,
                     'task_6' => $val->waktu_task6,
                     'task_7' => $val->waktu_task7,
-                    'aksi' => '<button>Aksi</button>'
+                    'no_sep' => $val->nosep,
+                    'aksi' => '<a class="btn btn-outline-success">Aksi</a>'
                 ];
             }
 
