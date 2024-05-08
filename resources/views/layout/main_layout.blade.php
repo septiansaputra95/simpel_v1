@@ -23,7 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Memuat library DataTables (CSS dan JS) -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
@@ -46,9 +46,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item">
             <a href="#" class="nav-link">Home</a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">Surat Pesanan</a>
-          </li>
+          </li> --}}
           <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Farmasi</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
@@ -77,6 +77,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li><a href="{{ route('antrol.index') }}" class="dropdown-item">Antrol</a></li>
               </ul>
             <li class="nav-item dropdown">
+
+            <li class="nav-item">
+              <a href="{{ route('suhuruangan.index') }}" class="nav-link">Suhu Ruangan</a>
+            </li>
 
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Gudang Umum</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">

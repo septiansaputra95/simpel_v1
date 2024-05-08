@@ -8,6 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Repositories\RepoPermintaan;
+use App\Exports\PermintaanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PermintaanController extends Controller
 {
@@ -216,17 +218,25 @@ class PermintaanController extends Controller
         if ($action == 'generate') {
             $generateData = $this->repoPermintaan->generate($bulan, $tahun);
 
-            //dd($dataunitid, $dataunitnama, $dataharga);
+            $dataunitid = $generateData[0];
+            $dataunitnama = $generateData[1];
+            $dataharga = $generateData[2];
+            $data = $generateData[3];
+
+            //dd($dataunitid, $dataunitnama, $dataharga, $data);
+            //dd($bulan, $tahun);
             return view('permintaan.laporan', [
-                'data'          => $generateData['data'],
-                'dataunitid'    => $generateData['dataunitid'],
-                'dataunitnama'  => $generateData['dataunitnama'],
-                'dataharga'     => $generateData['dataharga'],
-                'bulan'         => $generateData['bulansekarang'],
-                'tahun'         => $generateData['tahunSekarang']
+                'data'          => $data,
+                'dataunitid'    => $dataunitid,
+                'dataunitnama'  => $dataunitnama,
+                'dataharga'     => $dataharga,
+                'bulan'         => $bulan,
+                'tahun'         => $tahun
             ]);
         } elseif ($action == 'export') {
             // Logika untuk tombol Export Spreadsheet
+            // dd($tahun, $bulan);
+            echo "masuk export";
         } else {
             $bulan = Carbon::now()->format('m'); // Mendapatkan nilai bulan sekarang (format: 01, 02, ..., 12)
             $tahun = Carbon::now()->format('Y'); // Mendapatkan nilai tahun sekarang (format: 2023, 2024, dsb.)
@@ -237,7 +247,7 @@ class PermintaanController extends Controller
             $dataharga = $generateData[2];
             $data = $generateData[3];
 
-            dd($dataunitid, $dataunitnama, $dataharga, $data);
+            //dd($dataunitid, $dataunitnama, $dataharga, $data);
             return view('permintaan.laporan', [
 
                 'data'          => $data,
@@ -248,10 +258,7 @@ class PermintaanController extends Controller
                 'tahun'         => $tahun
             ]);
 
-        }
-
-        
-        
+        }    
     }
 
     public function detail($id, $bulan, $tahun)

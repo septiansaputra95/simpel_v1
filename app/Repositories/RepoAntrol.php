@@ -11,6 +11,7 @@ class RepoAntrol
         //dd($request->tanggal_registrasi);
         return DB::connection('pgsql_hinai')->table('bpjs_task_list')
                                             ->where('tanggal', $request->tanggal_registrasi)
+                                            ->where('status', 'Belum dilayani')
                                             ->get();
         
     }
