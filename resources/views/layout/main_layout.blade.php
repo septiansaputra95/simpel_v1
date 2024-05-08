@@ -82,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
               <li><a href="{{ route('permintaan.index') }}" class="dropdown-item">Permintaan </a></li>
               <li><a href="{{ route('permintaan.index') }}" class="dropdown-item">Master Barang</a></li>
-              <li><a href="{{ route('permintaan.index') }}" class="dropdown-item">Laporan Permintaan</a></li>
+              <li><a href="{{ route('permintaan.laporan') }}" class="dropdown-item">Laporan Permintaan</a></li>
 
               <li class="dropdown-divider"></li>
 
