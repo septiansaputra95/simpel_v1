@@ -7,6 +7,7 @@ use App\Http\Controllers\FarmasiKonsumsiController;
 use App\Http\Controllers\PoliklinikController;
 use App\Http\Controllers\AntrolController;
 use App\Http\Controllers\SuhuRuanganController; 
+use App\Http\Controllers\PermohonanController;
 // use App\Repositories\PoliklinikController;
 
 /*
@@ -72,3 +73,8 @@ Route::get('/suhuruangan', [SuhuRuanganController::class, 'index'])->name('suhur
 Route::get('/suhuruangan/chart', [SuhuRuanganController::class, 'chart'])->name('suhuruangan.chart');
 Route::get('/suhuruangan/live', [SuhuRuanganController::class, 'live'])->name('suhuruangan.live');
 
+// Permohonan Hasil
+Route::get('/permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
+Route::get('/permohonan/detail/{id}', [PermohonanController::class, 'show'])->name('permohonan.detail');
+Route::get('/permohonan/kirim/{id}', [PermohonanController::class, 'update'])->name('permohonan.kirim');
+Route::get('/check-notification', [PermohonanController::class, 'checkNotification']);

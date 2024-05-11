@@ -71,10 +71,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li class="nav-item dropdown">
 
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
               <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">BPJS</a>
               <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('antrol.index') }}" class="dropdown-item">Antrol</a></li>
+              </ul>
+            </li class="nav-item dropdown"> --}}
+
+            <li class="nav-item dropdown">
+              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">PACS</a>
+              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                <li><a href="{{ route('permohonan.index') }}" class="dropdown-item">Permohonan Hasil</a></li>
               </ul>
             </li class="nav-item dropdown">
 
