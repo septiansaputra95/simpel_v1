@@ -50,6 +50,9 @@
             right: 0;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7U4j+6TrEMPrNzKN4rCp9Nl9fIZQ6A8BgwF" crossorigin="anonymous"></script> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 @php
     $id = $request['id'];
@@ -74,25 +77,27 @@
             <label>{{ $keterangan }}</label>
             <br>
             <label>Unit Bagian:</label>
-            @foreach($dataunit as $item)
-                <label>{{ $item->unit_nama }}</label>
-            @endforeach
+            {{-- @foreach($dataunit as $item)
+                <label id = 'unit-nama'>{{ $item->unit_nama }}</label>
+            @endforeach --}}
+            <label id="unit-nama">{{ $dataunit[0]->unit_nama }}</label>
         </div>
         <div class="col-md-6">
             <label>Tanggal:</label>
             <label>{{ date('d/m/Y') }}</label>
             <br>
             <label>Supplier:</label>
-            <label>KOKARMINA PEKALONGAN</label>
+            <label>GU RSH PEKALONGAN</label>
         </div>
     </div>
     <br>
-    <table class="table">
+    <table class="table" id='tabel-permintaan'>
         <thead>
             <tr>
                 <th>No.</th>
                 <th>Nama Barang</th>
                 <th>Jumlah</th>
+                <th>Analisa</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
                 <th><b>Total Harga per item</b></th>
@@ -106,6 +111,7 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $barang->barang_nama }}</td>
                             <td>{{ $datajumlah[$key] }}</td>
+                            <td>{{ $datanalisa[$key] }}</td>
                             <td>{{ $barang->barang_satuan }}</td>
                             <td>Rp.{{ $barang->barang_harga }}</td>
                             <td>Rp.{{ $barang->barang_harga * $datajumlah[$key] }}</td>
@@ -117,15 +123,15 @@
                 @endforeach
             @endforeach
             <tr>
-                <td colspan="5" align="center">TOTAL HARGA</td>
+                <td colspan="6" align="center">TOTAL HARGA</td>
                 <td>Rp.{{ $total }}</td>
             </tr>
             <tr>
-                <td colspan="5" align="center">PPN 11%</td>
+                <td colspan="6" align="center">PPN 11%</td>
                 <td>Rp.{{ $total * 11/100 }}</td>
             </tr>
             <tr>
-                <td colspan="5" align="center">GRAND TOTAL</td>
+                <td colspan="6" align="center">GRAND TOTAL</td>
                 <td><b>Rp.{{ $grandtotal = $total + ($total * 11/100) }}</b></td>
             </tr>
         </tbody>
@@ -146,12 +152,16 @@
         </div>
         <div class="signature-box">
             Direktur RS<br>
-            <span class="signature-text">drg. Retno Windanarti, MARS</span>
+            <span class="signature-text">dr. Laela Khikmatul Khijjah</span>
         </div>
     </div>
     <br><br>
+    {{-- <button class="btn btn-outline-primary" id="btn-save">Save</button> --}}
+    <button class="btn btn-outline-success" id="btn-save">Save & Print</button>
+    <a href="{{ URL::previous() }}" class="btn btn-outline-warning">Kembali</a>
+    <br><br>
     <form action="{{ route('permintaan_store') }}" method="POST">
-    @csrf
+    {{-- @csrf --}}
         <input type="hidden" name="id" value="{{ $id }}">
         <input type="hidden" name="keterangan" value="{{ $keterangan }}">
         <input type="hidden" name="supplier" value="<?php echo '1'; ?>">
@@ -163,14 +173,17 @@
                     @if ($barang->barang_id == $value)
                     <input type="hidden" name="barang_{{ $key }}" value="{{ $barang->barang_id }}">
                     <input type="hidden" name="jumlah_{{ $key }}" value="{{ $datajumlah[$key] }}">
+                    <input type="hidden" name="analisa_{{ $key }}" value="{{ $datanalisa[$key] }}">
                     <input type="hidden" name="hargasatuan_{{ $key }}" value="{{ $barang->barang_harga }}">
                     @endif
                 @endforeach
          @endforeach
          <br>
-        <button class="btn btn-outline-success">Save & Print</button>
-        <a href="{{ URL::previous() }}" class="btn btn-outline-warning">Kembali</a>
+        
     </form>
     
 </body>
+{{-- <script type="module" src="{{ asset('resources/js/permintaan/show.js') }}"></script> --}}
+@vite(['resources/js/permintaan/show.js'])
+
 </html>

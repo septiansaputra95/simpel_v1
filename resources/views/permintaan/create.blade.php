@@ -50,7 +50,7 @@
                     @for ($i = 1; $i <= 10; $i++)
                         <label>Barang {{ $i }}</label>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <select name="barang_{{ $i }}" id="" class="form-control">
                                   <option value="">PILIH BARANG</option>
                                   @foreach ($data as $item)
@@ -58,8 +58,12 @@
                                   @endforeach
                               </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <input type="number" name="jumlah_{{ $i }}" class="form-control" placeholder="JUMLAH BARANG">
+                            </div>
+                            <div class="col-md-4">
+                              {{-- <input type="text" name="analisa_{{ $i }}" class="form-control" placeholder="ANALISA"> --}}
+                              <textarea name="analisa_{{ $i }}" class="form-control" placeholder="ANALISA"></textarea>
                             </div>
                         </div>
                     @endfor

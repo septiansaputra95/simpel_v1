@@ -145,9 +145,11 @@
         </div>
         <div class="signature-box">
             Direktur RS<br>
-            <span class="signature-text">drg. Retno Windanarti, MARS</span>
+            <span class="signature-text">dr. Laela Khikmatul Khijjah</span>
         </div>
     </div>
+    <br>
+    <label><b>Jadwal Pengeluaran GU Jam Kerja Hari Senin dan Kamis</b></label>
     <br>
     <a href="permintaan" class="btn btn-outline-warning">Halaman Permintaan</a>
 </body>

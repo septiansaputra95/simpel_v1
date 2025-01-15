@@ -11,6 +11,7 @@ use App\Repositories\RepoPermintaan;
 use App\Exports\PermintaanExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 class PermintaanController extends Controller
 {
     protected $repoPermintaan;
@@ -58,36 +59,33 @@ class PermintaanController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    try {
         $userid = '033123';
-        // Mengambil data dari form tambah
+
+        // Validasi data utama
         $request->validate([
             'id'            => 'required',
             'supplier'      => 'required',
             'keterangan'    => 'required',
             'namakaryawan'  => 'required',
-            'nomor'         => 'required',
+            'nomor'         => 'required|integer',
             'unitbagian'    => 'required'
         ]);
-        //dd($request);
-        // Mencari data unit berdasarkan pengguna id
-        // Ini belum dibutuhkan
-        $data = DB::table('pengguna')
-                ->where('pengguna_id', '=', $userid)
-                ->get(); 
-        
-        // Memasukan data unit id untuk masuk ke variabel $unit_id
-        foreach($data as $item){
-            $unit_id = $item->unit_id;
-        }
-        
-        $date = date('Y-m-d');
-        //dd($date);
-        $count = $request->nomor;
-        // dd($count);
 
-        // Memasukan data ke dalam database tabel header
-         DB::table('permintaan_header')->insert([
+        // Ambil data pengguna berdasarkan ID
+        $user = DB::table('pengguna')->where('pengguna_id', $userid)->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found'], 404);
+        }
+
+        $unit_id = $user->unit_id;
+        $date = now();
+        $count = $request->nomor;
+
+        // Simpan ke tabel header
+        DB::table('permintaan_header')->insert([
             'permintaan_header_id'          => $request->id,
             'permintaan_header_tgl'         => $date,
             'pengguna_id'                   => $userid,
@@ -96,39 +94,123 @@ class PermintaanController extends Controller
             'permintaan_header_keterangan'  => $request->keterangan,
             'karyawan'                      => $request->namakaryawan
         ]);
-        //return redirect('permintaan')->with('sukses', 'Data User Berhasil ditambah!');
-        // Perulangan untuk masuk ke tabel permintaan detail
-        for($i = 0; $i < $count; $i++){
-            $request->validate([
-                'barang_'.$i        => 'required',
-                'jumlah_'.$i        => 'nullable',
-                'hargasatuan_'.$i   => 'nullable'
-            ]);
-            
-            //dd($request);
-            $detail_id = $request->id.'_'.rand(1,10000);
-            // memasukan data ke dalam tabel permintaan detail
-            DB::table('permintaan_detail')->insert([
-               'permintaan_detail_id'           => $detail_id,
-               'permintaan_header_id'           => $request->id,
-               'barang_id'                      => $request->{'barang_'.$i},
-               'permintaan_detail_jumlah'       => $request->{'jumlah_'.$i},
-               'permintaan_detail_harga'        => $request->{'hargasatuan_'.$i}
-            ]);
-            
-        }
-        // Mengambil Data untuk kemudian di cetak
-        $data = DB::table('permintaan_header')
-                ->leftjoin('permintaan_detail', 'permintaan_detail.permintaan_header_id', '=', 'permintaan_header.permintaan_header_id')
-                ->leftjoin('masterbarang', 'masterbarang.barang_id', '=', 'permintaan_detail.barang_id')
-                ->leftjoin('masterunit', 'masterunit.unit_id', '=', 'permintaan_header.unit_id')
-                ->where('permintaan_header.permintaan_header_id', '=', $request->id)
-                ->get();
-        return view('permintaan.print', ['data' => $data]);
-        //return redirect('/permintaan');
-        //return redirect('permintaan')->with('sukses', 'Data User Berhasil ditambah!');
 
+        // Simpan ke tabel detail
+        for ($i = 0; $i < $count; $i++) {
+            $barangKey = 'barang_' . $i;
+            $jumlahKey = 'jumlah_' . $i;
+            $hargaKey = 'hargasatuan_' . $i;
+
+            $request->validate([
+                $barangKey => 'required',
+                $jumlahKey => 'nullable|numeric',
+                $hargaKey  => 'nullable|numeric'
+            ]);
+
+            $detail_id = $request->id . '_' . rand(1, 10000);
+
+            DB::table('permintaan_detail')->insert([
+                'permintaan_detail_id'           => $detail_id,
+                'permintaan_header_id'           => $request->id,
+                'barang_id'                      => $request->$barangKey,
+                'permintaan_detail_jumlah'       => $request->$jumlahKey,
+                'permintaan_detail_harga'        => $request->$hargaKey
+            ]);
+        }
+
+        // Ambil data lengkap untuk dicetak atau ditampilkan
+        $data = DB::table('permintaan_header')
+            ->leftJoin('permintaan_detail', 'permintaan_detail.permintaan_header_id', '=', 'permintaan_header.permintaan_header_id')
+            ->leftJoin('masterbarang', 'masterbarang.barang_id', '=', 'permintaan_detail.barang_id')
+            ->leftJoin('masterunit', 'masterunit.unit_id', '=', 'permintaan_header.unit_id')
+            ->where('permintaan_header.permintaan_header_id', '=', $request->id)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data saved successfully',
+            'data'    => $data
+        ], 200);
+    } catch (Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while processing the request',
+            'error'   => $e->getMessage()
+        ], 500);
     }
+}
+
+    // public function store(Request $request)
+    // {
+        
+    //     $userid = '033123';
+    //     // Mengambil data dari form tambah
+    //     $request->validate([
+    //         'id'            => 'required',
+    //         'supplier'      => 'required',
+    //         'keterangan'    => 'required',
+    //         'namakaryawan'  => 'required',
+    //         'nomor'         => 'required',
+    //         'unitbagian'    => 'required'
+    //     ]);
+    //     //dd($request);
+    //     // Mencari data unit berdasarkan pengguna id
+    //     // Ini belum dibutuhkan
+    //     $data = DB::table('pengguna')
+    //             ->where('pengguna_id', '=', $userid)
+    //             ->get(); 
+        
+    //     // Memasukan data unit id untuk masuk ke variabel $unit_id
+    //     foreach($data as $item){
+    //         $unit_id = $item->unit_id;
+    //     }
+        
+    //     $date = date('Y-m-d');
+    //     $count = $request->nomor;
+
+    //     // Memasukan data ke dalam database tabel header
+    //      DB::table('permintaan_header')->insert([
+    //         'permintaan_header_id'          => $request->id,
+    //         'permintaan_header_tgl'         => $date,
+    //         'pengguna_id'                   => $userid,
+    //         'unit_id'                       => $request->unitbagian,
+    //         'supplier_id'                   => $request->supplier,
+    //         'permintaan_header_keterangan'  => $request->keterangan,
+    //         'karyawan'                      => $request->namakaryawan
+    //     ]);
+    //     //return redirect('permintaan')->with('sukses', 'Data User Berhasil ditambah!');
+    //     // Perulangan untuk masuk ke tabel permintaan detail
+    //     for($i = 0; $i < $count; $i++){
+    //         $request->validate([
+    //             'barang_'.$i        => 'required',
+    //             'jumlah_'.$i        => 'nullable',
+    //             'hargasatuan_'.$i   => 'nullable'
+    //         ]);
+            
+    //         //dd($request);
+    //         $detail_id = $request->id.'_'.rand(1,10000);
+    //         // memasukan data ke dalam tabel permintaan detail
+    //         DB::table('permintaan_detail')->insert([
+    //            'permintaan_detail_id'           => $detail_id,
+    //            'permintaan_header_id'           => $request->id,
+    //            'barang_id'                      => $request->{'barang_'.$i},
+    //            'permintaan_detail_jumlah'       => $request->{'jumlah_'.$i},
+    //            'permintaan_detail_harga'        => $request->{'hargasatuan_'.$i}
+    //         ]);
+            
+    //     }
+    //     // Mengambil Data untuk kemudian di cetak
+    //     $data = DB::table('permintaan_header')
+    //             ->leftjoin('permintaan_detail', 'permintaan_detail.permintaan_header_id', '=', 'permintaan_header.permintaan_header_id')
+    //             ->leftjoin('masterbarang', 'masterbarang.barang_id', '=', 'permintaan_detail.barang_id')
+    //             ->leftjoin('masterunit', 'masterunit.unit_id', '=', 'permintaan_header.unit_id')
+    //             ->where('permintaan_header.permintaan_header_id', '=', $request->id)
+    //             ->get();
+    //     return view('permintaan.print', ['data' => $data]);
+    //     //return redirect('/permintaan');
+    //     //return redirect('permintaan')->with('sukses', 'Data User Berhasil ditambah!');
+
+    // }
 
     /**
      * Display the specified resource.
@@ -152,6 +234,7 @@ class PermintaanController extends Controller
             
             $databarang[] = $request->input('barang_'.$i);
             $datajumlah[] = $request->input('jumlah_'.$i);
+            $datanalisa[] = $request->input('analisa_'.$i);
             
         }
      
@@ -166,7 +249,8 @@ class PermintaanController extends Controller
         // Memanggil view dengan memasukan variabel data
         return view('permintaan.show', ['request' => $request,
         'databarang'    => $databarang, 
-        'datajumlah'    => $datajumlah, 
+        'datajumlah'    => $datajumlah,
+        'datanalisa'    => $datanalisa,
         'masterbarang'  => $masterbarang,
         'dataunit'      => $dataunit]);
 
@@ -287,5 +371,65 @@ class PermintaanController extends Controller
             'unitnama'         => $unitnama
 
         ]);
+    }
+
+    public function getLimit(Request $request)
+    {
+        $unit = $request->input('unit');
+        // dd($unit);
+        $data = DB::table('masterunit')
+                ->where('unit_nama', '=', $unit)
+                ->get();
+
+        return response()->json($data);
+    }
+
+    public function getPermintaan(Request $request)
+    {
+        $unit = $request->input('unit');
+        $tanggal = $request->input('tanggal');
+        \Log::info("Unit: $unit, Tanggal: $tanggal");
+
+        // Pastikan tanggal tidak kosong dan formatnya benar
+        if (!$tanggal) {
+            return response()->json(['error' => 'Tanggal tidak valid.'], 400);
+        }
+
+        $bulan = (int) date('m', strtotime($tanggal)); // Cast to integer
+        $tahun = (int) date('Y', strtotime($tanggal)); // Cast to integer
+
+        // Cek apakah bulan dan tahun sudah terisi dengan benar
+        \Log::info("Bulan: $bulan, Tahun: $tahun");
+
+        // Query untuk mengambil data berdasarkan unit, bulan, dan tahun
+        $data = DB::table('permintaan_detail')
+            ->join('permintaan_header', 'permintaan_header.permintaan_header_id', '=', 'permintaan_detail.permintaan_header_id')
+            ->join('masterunit', 'masterunit.unit_id', '=', 'permintaan_header.unit_id')
+            ->where('masterunit.unit_nama', '=', $unit)
+            ->whereMonth('permintaan_header.permintaan_header_tgl', '=', $bulan) // Menggunakan whereMonth untuk mencocokkan bulan
+            ->whereYear('permintaan_header.permintaan_header_tgl', '=', $tahun) // Menggunakan whereYear untuk mencocokkan tahun
+            ->select(
+                'permintaan_detail.permintaan_detail_id',
+                'permintaan_detail.permintaan_header_id',
+                'permintaan_detail.barang_id',
+                'permintaan_detail.permintaan_detail_jumlah',
+                'permintaan_detail.permintaan_detail_harga',
+                'permintaan_header.permintaan_header_id',
+                'permintaan_header.permintaan_header_tgl',
+                'permintaan_header.unit_id',
+                'masterunit.unit_nama'
+            )
+            ->get();
+
+        // Debug untuk memastikan query mengembalikan data
+        \Log::info("Data: ", $data->toArray());
+        // dd($data);
+        // Jika data kosong, beri respons
+        if ($data->isEmpty()) {
+            return response()->json(['message' => 'Data tidak ditemukan.'], 404);
+        }
+        
+        // Mengembalikan data sebagai JSON
+        return response()->json($data);
     }
 }

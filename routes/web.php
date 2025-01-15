@@ -42,6 +42,11 @@ Route::post('/permintaan_show', [PermintaanController::class, 'show'])->name('pe
 //Route::get('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
 Route::post('/permintaan_store', [PermintaanController::class, 'store'])->name('permintaan_store');
 Route::get('/permintaan/print/{id}', [PermintaanController::class, 'print'])->name('print');
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
+    Route::get('/permintaan/getLimit', 'PermintaanController@getLimit');
+    Route::get('/permintaan/getPermintaan', 'PermintaanController@getPermintaan');
+});
+
 
 //Laporan Permintaan
 //Route::get('/laporan', [PermintaanController::class, 'laporan']);
