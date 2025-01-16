@@ -96,6 +96,7 @@
                 <th>No.</th>
                 <th>Nama Barang</th>
                 <th>Jumlah</th>
+                <th>Analisa</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
                 <th><b>Total Harga per item</b></th>
@@ -107,6 +108,7 @@
                     <td>{{ $no++ }}</td>
                     <td>{{ $item->barang_nama }}</td>
                     <td>{{ $item->permintaan_detail_jumlah }}</td>
+                    <td>{{ $item->permintaan_analisa }}</td>
                     <td>{{ $item->barang_satuan }}</td>
                     <td>Rp.{{ number_format($item->permintaan_detail_harga, 2, ',', '.') }}</td>
                     <td>Rp.{{ number_format($item->permintaan_detail_harga * $item->permintaan_detail_jumlah, 2, ',', '.') }}</td>
@@ -151,7 +153,7 @@
     <br>
     <label><b>Jadwal Pengeluaran GU Jam Kerja Hari Senin dan Kamis</b></label>
     <br>
-    <a href="permintaan" class="btn btn-outline-warning">Halaman Permintaan</a>
+    <a href="{{ route('permintaan.index') }}" class="btn btn-outline-warning">Halaman Permintaan</a>
 </body>
 <script>
     // Mencetak halaman saat halaman dimuat

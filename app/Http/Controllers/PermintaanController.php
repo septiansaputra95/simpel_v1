@@ -97,9 +97,10 @@ class PermintaanController extends Controller
 
         // Simpan ke tabel detail
         for ($i = 0; $i < $count; $i++) {
-            $barangKey = 'barang_' . $i;
-            $jumlahKey = 'jumlah_' . $i;
-            $hargaKey = 'hargasatuan_' . $i;
+            $barangKey  = 'barang_' . $i;
+            $jumlahKey  = 'jumlah_' . $i;
+            $analisaKey = 'analisa_' . $i;
+            $hargaKey   = 'hargasatuan_' . $i;
 
             $request->validate([
                 $barangKey => 'required',
@@ -114,7 +115,8 @@ class PermintaanController extends Controller
                 'permintaan_header_id'           => $request->id,
                 'barang_id'                      => $request->$barangKey,
                 'permintaan_detail_jumlah'       => $request->$jumlahKey,
-                'permintaan_detail_harga'        => $request->$hargaKey
+                'permintaan_detail_harga'        => $request->$hargaKey,
+                'permintaan_analisa'             => $request->$analisaKey
             ]);
         }
 
